@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(cookieParser())
 const __dirname = path.resolve()
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.FRONTEND_URL,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
@@ -24,12 +24,12 @@ app.get("/", (req, res) => {
 });
 app.use("/api/auth", authRoute);
 app.use("/api/message",messageRoute );
-if(process.env.NODE_ENV=== "production"){
-  app.use(express.static(path.join(__dirname, "../frontend/dist")))
-  app.get("*", (req,res)=>{
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
-  })
-}
+// if(process.env.NODE_ENV=== "production"){
+//   app.use(express.static(path.join(__dirname, "../frontend/dist")))
+//   app.get("*", (req,res)=>{
+//     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"))
+//   })
+// }
 server.listen(PORT, () => {
   console.log("Server is running " + PORT);
 });
